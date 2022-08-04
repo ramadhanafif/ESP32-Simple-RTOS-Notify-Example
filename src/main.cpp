@@ -26,13 +26,11 @@ void vtask2(void *param)
 {
   for (;;)
   {
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    if (xSemaphoreTake(serialsempahore, portMAX_DELAY) == pdTRUE)
     {
-      ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-      if (xSemaphoreTake(serialsempahore, portMAX_DELAY) == pdTRUE)
-      {
-        Serial.println("hello from task 2");
-        xSemaphoreGive(serialsempahore);
-      }
+      Serial.println("hello from task 2");
+      xSemaphoreGive(serialsempahore);
     }
   }
 }
